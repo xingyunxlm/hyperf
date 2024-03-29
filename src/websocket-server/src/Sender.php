@@ -9,6 +9,7 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace Hyperf\WebSocketServer;
 
 use Hyperf\Contract\ConfigInterface;
@@ -26,8 +27,8 @@ use Swow\Psr7\Server\ServerConnection;
 use function Hyperf\Engine\swoole_get_flags_from_frame;
 
 /**
- * @method push(int $fd, $data, int $opcode = null, $finish = null)
- * @method disconnect(int $fd, int $code = null, string $reason = null)
+ * @method void push(int $fd, $data, int $opcode = null, $finish = null)
+ * @method void disconnect(int $fd, int $code = null, string $reason = null)
  */
 class Sender
 {

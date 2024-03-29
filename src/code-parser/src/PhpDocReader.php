@@ -9,6 +9,7 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace Hyperf\CodeParser;
 
 use PhpDocReader\AnnotationException;
@@ -79,6 +80,11 @@ class PhpDocReader
     public function getReturnClass(ReflectionMethod $method, bool $withoutNamespace = false): array
     {
         return $this->readReturnClass($method, false, $withoutNamespace);
+    }
+
+    public function isPrimitiveType(string $type): bool
+    {
+        return array_key_exists($type, self::PRIMITIVE_TYPES);
     }
 
     protected function readReturnClass(ReflectionMethod $method, bool $allowPrimitiveTypes, bool $withoutNamespace = false): array

@@ -293,7 +293,7 @@ class IndexController
 
 ## 处理错误消息
 
-通过 `Validator` 实例调用 `errors` 方法，会返回 `Hyperf\Utils\MessageBag` 实例，它拥有各种方便的方法处理错误信息。
+通过 `Validator` 实例调用 `errors` 方法，会返回 `Hyperf\Support\MessageBag` 实例，它拥有各种方便的方法处理错误信息。
 
 ### 查看特定字段的第一个错误信息
 
@@ -1158,6 +1158,7 @@ use Hyperf\Event\Annotation\Listener;
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 use Hyperf\Validation\Event\ValidatorFactoryResolved;
+use Hyperf\Validation\Validator;
 
 #[Listener]
 class ValidatorFactoryResolvedListener implements ListenerInterface
@@ -1175,11 +1176,11 @@ class ValidatorFactoryResolvedListener implements ListenerInterface
         /**  @var ValidatorFactoryInterface $validatorFactory */
         $validatorFactory = $event->validatorFactory;
         // 注册了 foo 验证器
-        $validatorFactory->extend('foo', function ($attribute, $value, $parameters, $validator) {
+        $validatorFactory->extend('foo', function (string $attribute, mixed $value, array $parameters, Validator $validator): bool {
             return $value == 'foo';
         });
         // 当创建一个自定义验证规则时，你可能有时候需要为错误信息定义自定义占位符这里扩展了 :foo 占位符
-        $validatorFactory->replacer('foo', function ($message, $attribute, $rule, $parameters) {
+        $validatorFactory->replacer('foo', function (string $message, string $attribute, string $rule, array $parameters): array|string {
             return str_replace(':foo', $attribute, $message);
         });
     }
